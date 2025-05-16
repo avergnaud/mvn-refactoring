@@ -36,7 +36,17 @@ Découpler la problématique des dépendences ?
 Mais inconvénient ?. "Maven modules often sit in the same source tree as the main application. Using maven modules outside the source tree actually is more complicated than it`s really worth."
 Sont dans le même repo, partagent la même version... On rebuild tout en même temps.
 
-### parent pom
+A noter : on peut avoir des modules, sans relation d'héritage
+
+[https://books.sonatype.com/mvnref-book/reference/pom-relationships-sect-pom-best-practice.html#pom-relationships-sect-multi-vs-inherit](https://books.sonatype.com/mvnref-book/reference/pom-relationships-sect-pom-best-practice.html#pom-relationships-sect-multi-vs-inherit)
+
+[mvnbook-parent](https://github.com/sonatype/maven-guide-en/blob/master/pom.xml)
+
+#### Exemple
+
+
+
+### parent pom / héritage
 
 "a benefit of using a parent POM is that we can set up dependency management for all child projects. For example, if you want all your child projects to use the same version of a logging framework, you can lock to that version in the parent POM and the child project will inherit the version in its dependency section"
 
