@@ -44,7 +44,9 @@ A noter : on peut avoir des modules, sans relation d'héritage
 
 #### Exemple
 
+[Exemple 1](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-1)
 
+[submodule-1/pom.xml](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-1/projet-chapeau/submodule-1/pom.xml) et [submodule-2/pom.xml](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-1/projet-chapeau/submodule-2/pom.xml) n'ont PAS comme parent [projet-chapeau/pom.xml](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-1/projet-chapeau/pom.xml)
 
 ### parent pom / héritage
 
