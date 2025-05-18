@@ -3,16 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.poc</groupId>
-        <artifactId>exemple-1</artifactId>
+        <artifactId>projet-parent</artifactId>
         <version>0.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>submodule-1</artifactId>
     <version>0.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 </project>
