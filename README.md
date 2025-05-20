@@ -57,7 +57,7 @@ A noter : on peut avoir des modules, sans relation d'héritage
 
 #### héritage sans modules
 
-Cf (Exemple 6)[https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-6]
+Cf [Exemple 6](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-6)
 
 #### Exemple
 
@@ -91,7 +91,7 @@ Solutions pour définir/forcer une version :
 - Maven does inherit the <dependencyManagement> section from a parent POM into its children.
 - The <dependencyManagement> section is exported from a BOM into its dependent projects.
 
-See (exemple-4/parent/module-a/effective-pom.txt)[https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt] and (exemple-5/module-a/effective-pom.txt)[https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt]
+See [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
 "Look at how the jar-parent-pom sets up its dependencyManagement section to lock versions of slf4j, Logback, and Logback Contributions. These frameworks have multiple JARs. A child project could depend on any combination of them. By using the dependencyManagement section, we ensure that any direct dependency or transitive dependency on any JAR in the bill of materials will use our specified version. These managed dependencies are also inherited by the war-parant-pom."
 
@@ -100,7 +100,7 @@ See (exemple-4/parent/module-a/effective-pom.txt)[https://github.com/avergnaud/m
 - Maven does inherit the <pluginManagement> section from a parent POM into its children.
 - The <pluginManagement> section is not exported from a BOM into its dependent projects.
 
-See (exemple-4/parent/module-a/effective-pom.txt)[https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt] and (exemple-5/module-a/effective-pom.txt)[https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt]
+See [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
 "we can ensure that we always see compiler warnings by configuring the maven-compiler-plugin in the pluginManagement section. This plugin is bound by default to the compile phase of the Maven Lifecycle. By configuring it here we ensure that every child project (jar or war) inherits this configuration."
 
@@ -109,7 +109,7 @@ See (exemple-4/parent/module-a/effective-pom.txt)[https://github.com/avergnaud/m
 - By design, Maven does not inherit the <profiles> section from a parent POM into its children. Profiles are resolved early in the model‐building phase and only their effects (activated plugins, dependencies, properties) flow down, not their declarations.
 - The <profiles> section is not exported from a BOM into its dependent projects.
 
-See (exemple-4/parent/module-a/effective-pom.txt)[https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt] and (exemple-5/module-a/effective-pom.txt)[https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt]
+See [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
 "Keep your build‑governance profiles centralized in the parent. Child modules will pick up their effects (e.g. property values, plugin executions) when you activate them with -P, even though help:effective-pom won’t list the <profiles> block itself.
 
