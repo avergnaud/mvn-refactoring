@@ -6,6 +6,16 @@ Refacto maven = refacto du build.
 
 Pas de refacto du runtime, i.e. pas de migration vers des fonctionnalités de type OSGi. (pas de gestion "runtime lifecycle of the components")
 
+## Exemple de migration...
+
+### Avant
+
+![Sources avant](./docs/mvn-refactoring_1.drawio.png?raw=true)
+
+### Apres
+
+![Sources après](./docs/mvn-refactoring_2.drawio.png?raw=true)
+
 ## principes
 
 ### separate versioning of common concerns
@@ -47,7 +57,7 @@ A noter : on peut avoir des modules, sans relation d'héritage
 
 #### héritage sans modules
 
-Cf Exemple-6
+Cf (Exemple 6)[https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-6]
 
 #### Exemple
 
