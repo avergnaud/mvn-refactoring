@@ -9,6 +9,7 @@
   <packaging>pom</packaging>
 
   <build>
+    <!-- TODO : hérité ? -->
     <pluginManagement>
       <plugins>
         <plugin>
