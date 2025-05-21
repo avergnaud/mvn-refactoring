@@ -2,6 +2,14 @@
 
 Ce document est une étude pour les projets de refonte Maven.
 
+Plan :
+- [Périmètre de l'étude](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#p%C3%A9rim%C3%A8tre-de-l%C3%A9tude)
+- [Exemple de migration](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#exemple-de-migration)
+- [Principes](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#principes)
+- [Moyens](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#moyens)
+- []()
+- []()
+
 ## Périmètre de l'étude
 
 On envisage uniquement une refonte ("migration", "refacto") de build Maven.
@@ -184,10 +192,10 @@ Le pipelining n'est pas une solution à prioriser. Très impactant.
 
 [https://medium.com/eonian-technologies/maven-for-pipelining-part-1-8b850d10a7ee](https://medium.com/eonian-technologies/maven-for-pipelining-part-1-8b850d10a7ee)
 
-## stratégie de test
+## Stratégie de test
 
 Les tests sont des TNR. Un TNR consiste à comparer les livrables (buildés), avant et après refacto. Les livrables doivent être identiques aux métadonnées près.
 
-## référence
+## Référence
 
 [https://books.sonatype.com/mvnref-book/reference/index.html](https://books.sonatype.com/mvnref-book/reference/index.html)
