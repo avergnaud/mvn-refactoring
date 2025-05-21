@@ -6,41 +6,55 @@ Refacto maven = refacto du build.
 
 Pas de refacto du runtime, i.e. pas de migration vers des fonctionnalités de type OSGi. (pas de gestion "runtime lifecycle of the components")
 
-## Exemple de migration...
+## Exemple de migration
 
 ### Avant
+
+- Tout le code source est dans le même repo git
+- Le pom parent déclare des modules
+- Le livrable est buildé dans son ensemble
+- Les versions des modules et du parent sont identiques
+- Le build du parent est lent (on reconstruit tout le livrable à chaque build)
 
 ![Sources avant](./docs/mvn-refactoring_1.drawio.png?raw=true)
 
 ### Apres
 
+- On utilise l'héritage (pom parent) pour le pluginManagement et les profiles
+- On utilise la composition (bom) pour spécifier les versions de dépendence
+- Chaque module peut être dans son propre repo git
+- Le pom parent ne déclare pas ses modules. Les modules sont déclarés en tant que dépendences
+- Chaque module peut être rebuildé séparément.
+- Les versions des modules et du parent sont a priori différentes
+- Le build du parent est rapide (on ne fait que récupérer les modules en dépendences)
+
 ![Sources après](./docs/mvn-refactoring_2.drawio.png?raw=true)
 
-## principes
+## Principes
 
-### separate versioning of common concerns
+### Factorisation des exigences transverses
 
-"By using a parent POM as a separate Maven project we greatly decrease the complexity of our child projects and provide separate versioning of common concerns"
+"Separate versioning of common concerns"
 
-[https://medium.com/eonian-technologies/maven-for-pipelining-part-1-8b850d10a7ee](https://medium.com/eonian-technologies/maven-for-pipelining-part-1-8b850d10a7ee)
+By using:
+- a parent POM 
+- or a BOM
 
-### build+version decoupling
+as a separate Maven project, we greatly decrease the complexity of our child projects and provide separate versioning of common concerns
+
+### Découplage des versions et des builds
 
 ? pouvoir builder chaque jar séparément, puis le war/ear
 
-### composition over inheritance
+### Composition over inheritance
 
 Contrainte : un pom ne peut avoir qu'un seul parent (et grand-parent...).
 
 Découpler la problématique des dépendences ?
 
-## moyens
+## Moyens
 
-```
-mvn help:effective-pom
-```
-
-### modules maven
+### Modules maven
 
 [https://www.baeldung.com/maven-multi-module#benefits-of-using-multi-modules](https://www.baeldung.com/maven-multi-module#benefits-of-using-multi-modules)
 
