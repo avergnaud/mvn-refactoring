@@ -7,8 +7,8 @@ Plan :
 - [Exemple de migration](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#exemple-de-migration)
 - [Principes](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#principes)
 - [Moyens](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#moyens)
-- []()
-- []()
+- [Stratégie de test](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#strat%C3%A9gie-de-test)
+- [Référence](https://github.com/avergnaud/mvn-refactoring?tab=readme-ov-file#r%C3%A9f%C3%A9rence)
 
 ## Périmètre de l'étude
 
