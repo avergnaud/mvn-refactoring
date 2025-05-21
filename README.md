@@ -115,8 +115,8 @@ Solutions pour définir/forcer une version :
 
 ### dependencyManagement
 
-- Maven fait hériter la section <dependencyManagement> d’un POM parent dans ses POM enfants.
-- La section <dependencyManagement> est exportée depuis un BOM vers les POM qui en dépendent.
+- Maven fait hériter la section `<dependencyManagement>` d’un POM parent dans ses POM enfants.
+- La section `<dependencyManagement>` est exportée depuis un BOM vers les POM qui en dépendent.
 
 Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
@@ -124,8 +124,8 @@ Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mv
 
 ### pluginManagement
 
-- Maven fait hériter la section <pluginManagement> d’un POM parent dans ses POM enfants.
-- La section <pluginManagement> n'est PAS exportée depuis un BOM vers les POM qui en dépendent.
+- Maven fait hériter la section `<pluginManagement>` d’un POM parent dans ses POM enfants.
+- La section `<pluginManagement>` n'est PAS exportée depuis un BOM vers les POM qui en dépendent.
 
 Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
@@ -133,8 +133,8 @@ Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mv
 
 ### profiles
 
-- Maven ne fait PAS hériter les <profiles> d’un POM parent dans ses POM enfants. Les profiles sont résolus tôt dans la phase de construction du modèle, et seuls leurs effets (plugins activés, dépendances, propriétés) sont transmis, pas leurs déclarations. 
-- La section <profiles> n'est PAS exportée depuis un BOM vers les POM qui en dépendent.
+- Maven ne fait PAS hériter les `<profiles>` d’un POM parent dans ses POM enfants. Les profiles sont résolus tôt dans la phase de construction du modèle, et seuls leurs effets (plugins activés, dépendances, propriétés) sont transmis, pas leurs déclarations. 
+- La section `<profiles>` n'est PAS exportée depuis un BOM vers les POM qui en dépendent.
 
 Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
