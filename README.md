@@ -1,10 +1,14 @@
 # mvn-refactoring
 
+Ce document est une étude pour les projets de refonte Maven.
+
 ## Périmètre de l'étude
 
-Refacto maven = refacto du build.
+On envisage uniquement une refonte ("migration", "refacto") de build Maven.
 
-Pas de refacto du runtime, i.e. pas de migration vers des fonctionnalités de type OSGi. (pas de gestion "runtime lifecycle of the components")
+On ne considère pas les refontes du runtime, i.e. pas de refonte vers des fonctionnalités de type OSGi.
+
+Le livrable produit doit être le même avant et après refacto (aux métadonnées de build près).
 
 ## Exemple de migration
 
@@ -21,9 +25,9 @@ Pas de refacto du runtime, i.e. pas de migration vers des fonctionnalités de ty
 ### Apres
 
 - On utilise l'héritage (pom parent) pour le pluginManagement et les profiles
-- On utilise la composition (bom) pour spécifier les versions de dépendence
+- On utilise la composition (bom) pour spécifier les versions de dépendences
 - Chaque module peut être dans son propre repo git
-- Le pom parent ne déclare pas ses modules. Les modules sont déclarés en tant que dépendences
+- Le pom parent ne déclare pas ses modules. Les "modules" sont déclarés en tant que dépendences
 - Chaque module peut être rebuildé séparément.
 - Les versions des modules et du parent sont a priori différentes
 - Le build du parent est rapide (on ne fait que récupérer les modules en dépendences)
@@ -36,34 +40,37 @@ Pas de refacto du runtime, i.e. pas de migration vers des fonctionnalités de ty
 
 "Separate versioning of common concerns"
 
-By using:
-- a parent POM 
-- or a BOM
+En utilisant:
+- un pom parent
+- ou un BOM
 
-as a separate Maven project, we greatly decrease the complexity of our child projects and provide separate versioning of common concerns
+...comme projet Maven distinct, on réduit la complexité des pom enfants et on obtient un versionnement séparé des exigences transverses.
 
 ### Découplage des versions et des builds
 
-? pouvoir builder chaque jar séparément, puis le war/ear
+On veut pouvoir builder chaque jar (module) séparément, puis le livrable complet (war, ear).
 
-### Composition over inheritance
+### "Composition" over inheritance
 
-Contrainte : un pom ne peut avoir qu'un seul parent (et grand-parent...).
+Contrainte : un pom ne peut avoir qu'un seul pom parent (et grand-parent...).
 
-Découpler la problématique des dépendences ?
+On cherche à découpler au maximum chaque module de son parent, en utilisant des dépendences plutôt que l'héritage.
 
 ## Moyens
 
 ### Modules maven
 
+Les projets Maven "multi-modules" présentent des avantages:
+
+"a benefit of using a parent POM is that we can set up dependency management for all child projects. For example, if you want all your child projects to use the same version of a logging framework, you can lock to that version in the parent POM and the child project will inherit the version in its dependency section"
+
 [https://www.baeldung.com/maven-multi-module#benefits-of-using-multi-modules](https://www.baeldung.com/maven-multi-module#benefits-of-using-multi-modules)
 
-Mais inconvénient ?. "Maven modules often sit in the same source tree as the main application. Using maven modules outside the source tree actually is more complicated than it`s really worth."
-Sont dans le même repo, partagent la même version... On rebuild tout en même temps.
+Les projets Maven "multi-modules" présentent aussi des inconvénients : parfois tous les modules se retrouvent dans le même repo git. Ils partagent tous la même version et sont buildés ensemble.
 
 [Exemple 2](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-2/projet-chapeau)
 
-#### modules sans héritage
+#### Modules sans héritage
 
 A noter : on peut avoir des modules, sans relation d'héritage
 
@@ -71,30 +78,26 @@ A noter : on peut avoir des modules, sans relation d'héritage
 
 [mvnbook-parent](https://github.com/sonatype/maven-guide-en/blob/master/pom.xml)
 
-#### héritage sans modules
+#### Héritage sans modules
 
-Cf [Exemple 6](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-6). Permet des repos séparés.
+Un pom peut hériter d'un parent, sans que le parent le déclare en tant que module.
 
-#### Exemple
+Cf [Exemple 6](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-6).
 
 [Exemple 1](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-1)
 
 [submodule-1/pom.xml](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-1/projet-chapeau/submodule-1/pom.xml) et [submodule-2/pom.xml](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-1/projet-chapeau/submodule-2/pom.xml) n'ont PAS comme parent [projet-chapeau/pom.xml](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-1/projet-chapeau/pom.xml)
 
-### parent pom / héritage
+### Résolution de dépendences transitives + croisées par maven
 
-"a benefit of using a parent POM is that we can set up dependency management for all child projects. For example, if you want all your child projects to use the same version of a logging framework, you can lock to that version in the parent POM and the child project will inherit the version in its dependency section"
-
-#### résolution de dépendences transitives + croisées par maven
-
-Maven a sa logique propre pour résoudre un conflit de versions entre deux dépendences.
+Maven a sa logique propre pour résoudre un conflit de versions entre deux dépendences :
 
 [https://reflectoring.io/maven-bom/](https://reflectoring.io/maven-bom/)
 
 ```
 mvn dependency:tree -Dverbose=true
 ```
-
+Cf :
 - Cas "omitted for duplicate"
 - Cas "omitted for conflict with..."
 
@@ -102,30 +105,30 @@ Solutions pour définir/forcer une version :
 - définir une dépendence directe
 - dans le dependencyManagement ("We should note that defining a dependency in the dependencyManagement section doesn’t add it to the dependency tree of the project, it is used just for lookup reference.")
 
-#### dependencyManagement
+### dependencyManagement
 
-- Maven does inherit the <dependencyManagement> section from a parent POM into its children.
-- The <dependencyManagement> section is exported from a BOM into its dependent projects.
+- Maven fait hériter la section <dependencyManagement> d’un POM parent dans ses POM enfants.
+- La section <dependencyManagement> est exportée depuis un BOM vers les POM qui en dépendent.
 
-See [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
+Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
-"Look at how the jar-parent-pom sets up its dependencyManagement section to lock versions of slf4j, Logback, and Logback Contributions. These frameworks have multiple JARs. A child project could depend on any combination of them. By using the dependencyManagement section, we ensure that any direct dependency or transitive dependency on any JAR in the bill of materials will use our specified version. These managed dependencies are also inherited by the war-parant-pom."
+"By using the dependencyManagement section, we ensure that any direct dependency or transitive dependency on any JAR in the bill of materials will use our specified version. These managed dependencies are also inherited by the war-parant-pom."
 
-#### pluginManagement
+### pluginManagement
 
-- Maven does inherit the <pluginManagement> section from a parent POM into its children.
-- The <pluginManagement> section is not exported from a BOM into its dependent projects.
+- Maven fait hériter la section <pluginManagement> d’un POM parent dans ses POM enfants.
+- La section <pluginManagement> n'est PAS exportée depuis un BOM vers les POM qui en dépendent.
 
-See [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
+Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
 "we can ensure that we always see compiler warnings by configuring the maven-compiler-plugin in the pluginManagement section. This plugin is bound by default to the compile phase of the Maven Lifecycle. By configuring it here we ensure that every child project (jar or war) inherits this configuration."
 
-#### profiles
+### profiles
 
-- By design, Maven does not inherit the <profiles> section from a parent POM into its children. Profiles are resolved early in the model‐building phase and only their effects (activated plugins, dependencies, properties) flow down, not their declarations.
-- The <profiles> section is not exported from a BOM into its dependent projects.
+- Maven ne fait PAS hériter les <profiles> d’un POM parent dans ses POM enfants. Les profiles sont résolus tôt dans la phase de construction du modèle, et seuls leurs effets (plugins activés, dépendances, propriétés) sont transmis, pas leurs déclarations. 
+- La section <profiles> n'est PAS exportée depuis un BOM vers les POM qui en dépendent.
 
-See [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
+Cf [exemple-4/parent/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-4/parent/module-a/effective-pom.txt) and [exemple-5/module-a/effective-pom.txt](https://github.com/avergnaud/mvn-refactoring/blob/main/exemple-5/module-a/effective-pom.txt)
 
 "Keep your build‑governance profiles centralized in the parent. Child modules will pick up their effects (e.g. property values, plugin executions) when you activate them with -P, even though help:effective-pom won’t list the <profiles> block itself.
 
@@ -133,9 +136,9 @@ Use help:active-profiles and help:all-profiles to inspect profile activation and
 
 ### BOM
 
-L'import en mode dependencyManagement importe uniquement la définition/l'exigence de version. Mais la dépendence n'est pas tirée..
+La technique de BOM maven consiste à importer en tant que dépendence une liste de versions pour des composants définis.
 
-Composition over inheritance !?
+L'import en mode dependencyManagement importe uniquement la définition/l'exigence des versions. Mais la dépendence n'est pas effectivement définie.
 
 [https://reflectoring.io/maven-bom/](https://reflectoring.io/maven-bom/)
 
@@ -175,16 +178,16 @@ The import scope set in the dependency section indicates that this dependency sh
 
 Si on veut effectivement tirer la dépendence dans module-1 ou module-2, il faut déclarer la dépendence.
 
-### pipelining
+### Pipelining
 
-pas une solution à prioriser. Très impactant.
+Le pipelining n'est pas une solution à prioriser. Très impactant.
 
 [https://medium.com/eonian-technologies/maven-for-pipelining-part-1-8b850d10a7ee](https://medium.com/eonian-technologies/maven-for-pipelining-part-1-8b850d10a7ee)
 
 ## stratégie de test
 
-Comparaison des livrables (buildés), avant/après refacto. Les livrables doivent être identiques aux métadonnées près.
+Les tests sont des TNR. Un TNR consiste à comparer les livrables (buildés), avant et après refacto. Les livrables doivent être identiques aux métadonnées près.
 
-## références
+## référence
 
 [https://books.sonatype.com/mvnref-book/reference/index.html](https://books.sonatype.com/mvnref-book/reference/index.html)
