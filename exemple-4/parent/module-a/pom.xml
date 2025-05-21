@@ -6,7 +6,7 @@
 
   <!-- Inherit everything from parent -->
   <parent>
-    <groupId>com.example</groupId>
+    <groupId>com.example4</groupId>
     <artifactId>parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>

@@ -47,6 +47,8 @@ mvn help:effective-pom
 Mais inconvénient ?. "Maven modules often sit in the same source tree as the main application. Using maven modules outside the source tree actually is more complicated than it`s really worth."
 Sont dans le même repo, partagent la même version... On rebuild tout en même temps.
 
+[Exemple 2](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-2/projet-chapeau)
+
 #### modules sans héritage
 
 A noter : on peut avoir des modules, sans relation d'héritage
@@ -57,7 +59,7 @@ A noter : on peut avoir des modules, sans relation d'héritage
 
 #### héritage sans modules
 
-Cf [Exemple 6](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-6)
+Cf [Exemple 6](https://github.com/avergnaud/mvn-refactoring/tree/main/exemple-6). Permet des repos séparés.
 
 #### Exemple
 

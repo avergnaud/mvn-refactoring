@@ -3,13 +3,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.poc</groupId>
+  <groupId>com.poc3</groupId>
   <artifactId>projet-bom</artifactId>
   <version>0.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <build>
-    <!-- TODO : hérité ? -->
+    <!-- NOT exported from a BOM into its dependent projects: -->
     <pluginManagement>
       <plugins>
         <plugin>
@@ -17,14 +17,15 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.1</version>
           <configuration>
-            <source>${java.version}</source>
-            <target>${java.version}</target>
+            <source>17</source>
+            <target>17</target>
           </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
 
+  <!-- exported from a BOM into its dependent projects: -->
   <dependencyManagement>
     <dependencies>
       <dependency>

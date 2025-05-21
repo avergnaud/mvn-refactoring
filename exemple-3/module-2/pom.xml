@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.poc</groupId>
+  <groupId>com.poc3</groupId>
     <artifactId>module-2</artifactId>
     <version>0.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -15,7 +15,7 @@
     <dependencyManagement>
     	<dependencies>
             <dependency>
-                <groupId>com.poc</groupId>
+                <groupId>com.poc3</groupId>
                 <artifactId>projet-bom</artifactId>
                 <version>0.0.0-SNAPSHOT</version>
                 <type>pom</type>
